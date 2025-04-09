@@ -1,11 +1,11 @@
-package com.andrbezr2016.library.catalog.service.service;
+package com.andrbezr2016.library.catalog.service;
 
-import com.andrbezr2016.library.catalog.service.dto.TagDto;
-import com.andrbezr2016.library.catalog.service.dto.TagFilter;
-import com.andrbezr2016.library.catalog.service.dto.TagInput;
-import com.andrbezr2016.library.catalog.service.dto.TagUpdate;
-import com.andrbezr2016.library.catalog.service.mapper.TagMapper;
-import com.andrbezr2016.library.catalog.service.repository.TagRepository;
+import com.andrbezr2016.library.catalog.dto.TagDto;
+import com.andrbezr2016.library.catalog.dto.TagFilter;
+import com.andrbezr2016.library.catalog.dto.TagInput;
+import com.andrbezr2016.library.catalog.dto.TagUpdate;
+import com.andrbezr2016.library.catalog.mapper.TagMapper;
+import com.andrbezr2016.library.catalog.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

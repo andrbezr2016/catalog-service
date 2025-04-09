@@ -1,9 +1,9 @@
-package com.andrbezr2016.library.catalog.service.mapper;
+package com.andrbezr2016.library.catalog.mapper;
 
-import com.andrbezr2016.library.catalog.service.dto.BookDto;
-import com.andrbezr2016.library.catalog.service.dto.BookInput;
-import com.andrbezr2016.library.catalog.service.dto.BookUpdate;
-import com.andrbezr2016.library.catalog.service.entity.Book;
+import com.andrbezr2016.library.catalog.dto.BookDto;
+import com.andrbezr2016.library.catalog.dto.BookInput;
+import com.andrbezr2016.library.catalog.dto.BookUpdate;
+import com.andrbezr2016.library.catalog.entity.Book;
 import org.mapstruct.Mapper;
 
 import java.util.Collection;

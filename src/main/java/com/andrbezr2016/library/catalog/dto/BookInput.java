@@ -1,4 +1,4 @@
-package com.andrbezr2016.library.catalog.service.dto;
+package com.andrbezr2016.library.catalog.dto;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class BookUpdate {
+public class BookInput {
 
     private String title;
     private String description;
@@ -19,5 +19,5 @@ public class BookUpdate {
     private Integer yearPublished;
     private String isbn;
     private Integer pages;
-    private Set<TagUpdate> tags;
+    private Set<TagInput> tags;
 }

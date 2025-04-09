@@ -1,4 +1,4 @@
-package com.andrbezr2016.library.catalog.service.dto;
+package com.andrbezr2016.library.catalog.dto;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class TagUpdate {
+public class TagInput {
 
     private String name;
 }

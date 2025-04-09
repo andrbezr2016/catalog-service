@@ -1,4 +1,4 @@
-package com.andrbezr2016.library.catalog.service.dto;
+package com.andrbezr2016.library.catalog.dto;
 
 import lombok.*;
 

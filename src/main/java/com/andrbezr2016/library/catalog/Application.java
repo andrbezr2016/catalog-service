@@ -1,4 +1,4 @@
-package com.andrbezr2016.library.catalog.service;
+package com.andrbezr2016.library.catalog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

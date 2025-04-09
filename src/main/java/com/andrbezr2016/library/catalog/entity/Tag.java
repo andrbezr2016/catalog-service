@@ -1,4 +1,4 @@
-package com.andrbezr2016.library.catalog.service.entity;
+package com.andrbezr2016.library.catalog.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

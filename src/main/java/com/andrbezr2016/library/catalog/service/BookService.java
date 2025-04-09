@@ -1,14 +1,14 @@
-package com.andrbezr2016.library.catalog.service.service;
+package com.andrbezr2016.library.catalog.service;
 
-import com.andrbezr2016.library.catalog.service.dto.BookDto;
-import com.andrbezr2016.library.catalog.service.dto.BookFilter;
-import com.andrbezr2016.library.catalog.service.dto.BookInput;
-import com.andrbezr2016.library.catalog.service.dto.BookUpdate;
-import com.andrbezr2016.library.catalog.service.entity.Book;
-import com.andrbezr2016.library.catalog.service.entity.Tag;
-import com.andrbezr2016.library.catalog.service.mapper.BookMapper;
-import com.andrbezr2016.library.catalog.service.repository.BookRepository;
-import com.andrbezr2016.library.catalog.service.repository.TagRepository;
+import com.andrbezr2016.library.catalog.dto.BookDto;
+import com.andrbezr2016.library.catalog.dto.BookFilter;
+import com.andrbezr2016.library.catalog.dto.BookInput;
+import com.andrbezr2016.library.catalog.dto.BookUpdate;
+import com.andrbezr2016.library.catalog.entity.Book;
+import com.andrbezr2016.library.catalog.entity.Tag;
+import com.andrbezr2016.library.catalog.mapper.BookMapper;
+import com.andrbezr2016.library.catalog.repository.BookRepository;
+import com.andrbezr2016.library.catalog.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

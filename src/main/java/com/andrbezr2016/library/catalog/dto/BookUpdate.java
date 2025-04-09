@@ -1,18 +1,17 @@
-package com.andrbezr2016.library.catalog.service.dto;
+package com.andrbezr2016.library.catalog.dto;
 
 import lombok.*;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Setter
 @Getter
-@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class BookDto {
+public class BookUpdate {
 
-    private UUID id;
     private String title;
     private String description;
     private String author;
@@ -20,5 +19,5 @@ public class BookDto {
     private Integer yearPublished;
     private String isbn;
     private Integer pages;
-    private Set<TagDto> tags;
+    private Set<TagUpdate> tags;
 }
