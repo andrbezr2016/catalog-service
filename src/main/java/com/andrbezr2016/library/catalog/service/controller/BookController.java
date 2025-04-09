@@ -31,8 +31,8 @@ public class BookController {
     }
 
     @MutationMapping
-    public BookDto updateBook(@Argument("bookUpdate") BookUpdate bookUpdate) {
-        return bookService.updateBook(bookUpdate);
+    public BookDto updateBook(@Argument("id") UUID id, @Argument("bookUpdate") BookUpdate bookUpdate) {
+        return bookService.updateBook(id, bookUpdate);
     }
 
     @MutationMapping

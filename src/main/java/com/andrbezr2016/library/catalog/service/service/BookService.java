@@ -107,13 +107,13 @@ public class BookService {
     }
 
     @Transactional
-    public BookDto updateBook(BookUpdate bookUpdate) {
+    public BookDto updateBook(UUID id, BookUpdate bookUpdate) {
         if (bookUpdate == null) {
             throw new RuntimeException("BookUpdate is empty!");
         }
 
         Book update = bookMapper.toEntity(bookUpdate);
-        Book book = bookRepository.findById(update.getId()).orElse(null);
+        Book book = bookRepository.findById(id).orElse(null);
         if (book != null) {
             Set<Tag> tags = mergeTags(update.getTags());
             update.setTags(tags);

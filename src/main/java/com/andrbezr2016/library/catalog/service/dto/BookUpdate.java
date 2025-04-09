@@ -3,7 +3,6 @@ package com.andrbezr2016.library.catalog.service.dto;
 import lombok.*;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -13,7 +12,6 @@ import java.util.UUID;
 @EqualsAndHashCode
 public class BookUpdate {
 
-    private UUID id;
     private String title;
     private String description;
     private String author;

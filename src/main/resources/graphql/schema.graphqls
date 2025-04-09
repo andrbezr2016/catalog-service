@@ -22,7 +22,6 @@ input BookInput {
 }
 
 input BookUpdate {
-    id: ID!
     title: String
     description: String
     author: String
@@ -45,12 +44,32 @@ input BookFilter {
     tags: [TagFilter]
 }
 
+type TagDto {
+    id: ID
+    name: String
+}
+
+input TagInput {
+    name: String!
+}
+
+input TagUpdate {
+    name: String
+}
+
+input TagFilter {
+    name: String
+}
+
 type Query {
     getBooks(bookFilter: BookFilter!): [BookDto]
+    getTags(tagFilter: TagFilter!): [TagDto]
 }
 
 type Mutation {
     addBook(bookInput: BookInput!): BookDto
-    updateBook(bookUpdate: BookUpdate!): BookDto
+    updateBook(id: ID!, bookUpdate: BookUpdate!): BookDto
     deleteBook(id: ID!): BookDto
+    addTag(tagInput: TagInput!): TagDto
+    updateTag(id: ID!, tagUpdate: TagUpdate!): TagDto
 }
