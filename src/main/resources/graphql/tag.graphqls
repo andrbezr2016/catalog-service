@@ -1,0 +1,16 @@
+type TagDto {
+    id: ID
+    name: String
+}
+
+input TagInput {
+    name: String!
+}
+
+input TagUpdate {
+    name: String
+}
+
+input TagFilter {
+    name: String
+}

@@ -1,0 +1,22 @@
+server:
+  port: ${SERVICE_PORT:8081}
+spring:
+  name: ${SERVICE_NAME:catalog-service}
+  graphql:
+    graphiql:
+      enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${POSTGRES_PATH:jdbc:postgresql://localhost:5432/library}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  flyway:
+    default-schema: catalog-service
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: ${spring.flyway.default-schema}

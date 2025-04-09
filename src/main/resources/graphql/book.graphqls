@@ -1,0 +1,56 @@
+type BookDto {
+    id: ID
+    title: String
+    description: String
+    author: String
+    publisher: String
+    yearPublished: Int
+    isbn: String
+    pages: Int
+    tags: [TagDto]
+}
+
+input BookInput {
+    title: String!
+    description: String
+    author: String
+    publisher: String
+    yearPublished: Int
+    isbn: String
+    pages: Int
+    tags: [TagInput]
+}
+
+input BookUpdate {
+    id: ID!
+    title: String
+    description: String
+    author: String
+    publisher: String
+    yearPublished: Int
+    isbn: String
+    pages: Int
+    tags: [TagUpdate]
+}
+
+input BookFilter {
+    id: ID
+    title: String
+    description: String
+    author: String
+    publisher: String
+    yearPublished: Int
+    isbn: String
+    pages: Int
+    tags: [TagFilter]
+}
+
+type Query {
+    getBooks(bookFilter: BookFilter!): [BookDto]
+}
+
+type Mutation {
+    addBook(bookInput: BookInput!): BookDto
+    updateBook(bookUpdate: BookUpdate!): BookDto
+    deleteBook(id: ID!): BookDto
+}
