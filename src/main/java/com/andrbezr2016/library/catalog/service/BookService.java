@@ -28,75 +28,95 @@ public class BookService {
 
     @Transactional
     public Collection<BookDto> getBooks(BookFilter bookFilter) {
+        if (bookFilter == null) {
+            throw new RuntimeException("BookFilter is null!");
+        }
+
+        Book filter = bookMapper.toEntity(bookFilter);
         Collection<Specification<Book>> specs = new ArrayList<>();
-        if (bookFilter.getId() != null) {
-            specs.add(byId(bookFilter.getId()));
+        if (filter.getId() != null) {
+            specs.add(byId(filter.getId()));
         }
-        if (bookFilter.getTitle() != null) {
-            specs.add(byTitle(bookFilter.getTitle()));
+        if (filter.getTitle() != null) {
+            specs.add(byTitle(filter.getTitle()));
         }
-        if (bookFilter.getDescription() != null) {
-            specs.add(byDescription(bookFilter.getDescription()));
+        if (filter.getDescription() != null) {
+            specs.add(byDescription(filter.getDescription()));
         }
-        if (bookFilter.getAuthor() != null) {
-            specs.add(byAuthor(bookFilter.getAuthor()));
+        if (filter.getAuthor() != null) {
+            specs.add(byAuthor(filter.getAuthor()));
         }
-        if (bookFilter.getPublisher() != null) {
-            specs.add(byPublisher(bookFilter.getPublisher()));
+        if (filter.getPublisher() != null) {
+            specs.add(byPublisher(filter.getPublisher()));
         }
-        if (bookFilter.getYearPublished() != null) {
-            specs.add(byYearPublished(bookFilter.getYearPublished()));
+        if (filter.getYearPublished() != null) {
+            specs.add(byYearPublished(filter.getYearPublished()));
         }
-        if (bookFilter.getIsbn() != null) {
-            specs.add(byIsbn(bookFilter.getIsbn()));
+        if (filter.getIsbn() != null) {
+            specs.add(byIsbn(filter.getIsbn()));
         }
-        if (bookFilter.getPages() != null) {
-            specs.add(byPages(bookFilter.getPages()));
+        if (filter.getPages() != null) {
+            specs.add(byPages(filter.getPages()));
+        }
+        if (filter.getTags() != null) {
+            specs.add(byTags(filter.getTags()));
         }
 
         if (!specs.isEmpty()) {
-            return bookMapper.toDtoCollection(bookRepository.findAll(Specification.allOf()));
+            return bookMapper.toDtoCollection(bookRepository.findAll(Specification.allOf(specs)));
         } else {
             return bookMapper.toDtoCollection(bookRepository.findAll());
         }
     }
 
-    private Specification<Book> byId(UUID id) {
+    private static Specification<Book> byId(UUID id) {
         return (record, cq, cb) -> cb.equal(record.get("id"), id);
     }
 
-    private Specification<Book> byTitle(String title) {
-        return (record, cq, cb) -> cb.equal(record.get("title"), title);
+    private static Specification<Book> byTitle(String title) {
+        return (record, cq, cb) -> cb.like(record.get("title"), "%" + title + "%");
     }
 
-    private Specification<Book> byDescription(String description) {
-        return (record, cq, cb) -> cb.equal(record.get("description"), description);
+    private static Specification<Book> byDescription(String description) {
+        return (record, cq, cb) -> cb.like(record.get("description"), "%" + description + "%");
     }
 
-    private Specification<Book> byAuthor(String author) {
-        return (record, cq, cb) -> cb.equal(record.get("author"), author);
+    private static Specification<Book> byAuthor(String author) {
+        return (record, cq, cb) -> cb.like(record.get("author"), "%" + author + "%");
     }
 
-    private Specification<Book> byPublisher(String publisher) {
-        return (record, cq, cb) -> cb.equal(record.get("publisher"), publisher);
+    private static Specification<Book> byPublisher(String publisher) {
+        return (record, cq, cb) -> cb.like(record.get("publisher"), "%" + publisher + "%");
     }
 
-    private Specification<Book> byYearPublished(Integer yearPublished) {
+    private static Specification<Book> byYearPublished(Integer yearPublished) {
         return (record, cq, cb) -> cb.equal(record.get("yearPublished"), yearPublished);
     }
 
-    private Specification<Book> byIsbn(String isbn) {
-        return (record, cq, cb) -> cb.equal(record.get("isbn"), isbn);
+    private static Specification<Book> byIsbn(String isbn) {
+        return (record, cq, cb) -> cb.like(record.get("isbn"), "%" + isbn + "%");
     }
 
-    private Specification<Book> byPages(Integer pages) {
+    private static Specification<Book> byPages(Integer pages) {
         return (record, cq, cb) -> cb.equal(record.get("pages"), pages);
+    }
+
+    private static Specification<Book> byTags(Set<Tag> tags) {
+        Collection<Specification<Book>> specs = new ArrayList<>();
+        for (Tag tag : tags) {
+            Specification<Book> spec = (record, cq, cb) -> {
+                cq.distinct(true);
+                return cb.equal(record.get("tags").get("name"), tag.getName());
+            };
+            specs.add(spec);
+        }
+        return Specification.anyOf(specs);
     }
 
     @Transactional
     public BookDto addBook(BookInput bookInput) {
         if (bookInput == null) {
-            throw new RuntimeException("BookInput is empty!");
+            throw new RuntimeException("BookInput is null!");
         }
 
         Book input = bookMapper.toEntity(bookInput);
@@ -109,7 +129,7 @@ public class BookService {
     @Transactional
     public BookDto updateBook(UUID id, BookUpdate bookUpdate) {
         if (bookUpdate == null) {
-            throw new RuntimeException("BookUpdate is empty!");
+            throw new RuntimeException("BookUpdate is null!");
         }
 
         Book update = bookMapper.toEntity(bookUpdate);

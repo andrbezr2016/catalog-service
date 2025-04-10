@@ -1,0 +1,16 @@
+mutation deleteBook {
+    deleteBook(id: "2f2b1569-e02c-4cce-9c0f-5643eefdf595") {
+        author
+        description
+        id
+        isbn
+        pages
+        publisher
+        title
+        yearPublished
+        tags {
+            name
+            id
+        }
+    }
+}

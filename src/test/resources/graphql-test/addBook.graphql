@@ -1,0 +1,18 @@
+mutation addBook {
+    addBook(
+        bookInput: {title: "Test Title"}
+    ) {
+        author
+        description
+        id
+        isbn
+        pages
+        publisher
+        tags {
+            name
+            id
+        }
+        title
+        yearPublished
+    }
+}

@@ -7,7 +7,7 @@ spring:
       enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${POSTGRES_PATH:jdbc:postgresql://localhost:5432/library}
+    url: ${POSTGRES_PATH:jdbc:postgresql://localhost:5555/library}
     username: ${POSTGRES_USERNAME:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
   flyway:

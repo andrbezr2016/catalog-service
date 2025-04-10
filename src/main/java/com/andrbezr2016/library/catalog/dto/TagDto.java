@@ -6,6 +6,8 @@ import java.util.UUID;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @ToString
 @EqualsAndHashCode

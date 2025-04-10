@@ -1,6 +1,7 @@
 package com.andrbezr2016.library.catalog.mapper;
 
 import com.andrbezr2016.library.catalog.dto.BookDto;
+import com.andrbezr2016.library.catalog.dto.BookFilter;
 import com.andrbezr2016.library.catalog.dto.BookInput;
 import com.andrbezr2016.library.catalog.dto.BookUpdate;
 import com.andrbezr2016.library.catalog.entity.Book;
@@ -18,4 +19,6 @@ public interface BookMapper {
     Book toEntity(BookInput bookInput);
 
     Book toEntity(BookUpdate bookUpdate);
+
+    Book toEntity(BookFilter bookFilter);
 }

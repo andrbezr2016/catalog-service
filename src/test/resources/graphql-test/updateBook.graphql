@@ -1,0 +1,19 @@
+mutation updateBook {
+    updateBook(
+        bookUpdate: {title: "Test Title"}
+        id: "862f7c7b-b152-4bd3-a537-2f21c3067759"
+    ) {
+        author
+        description
+        id
+        isbn
+        pages
+        publisher
+        tags {
+            id
+            name
+        }
+        title
+        yearPublished
+    }
+}

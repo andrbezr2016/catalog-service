@@ -69,6 +69,4 @@ type Mutation {
     addBook(bookInput: BookInput!): BookDto
     updateBook(id: ID!, bookUpdate: BookUpdate!): BookDto
     deleteBook(id: ID!): BookDto
-    addTag(tagInput: TagInput!): TagDto
-    updateTag(id: ID!, tagUpdate: TagUpdate!): TagDto
 }
