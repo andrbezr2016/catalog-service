@@ -2,7 +2,7 @@ package com.andrbezr2016.library.catalog.dto;
 
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -22,5 +22,5 @@ public class BookFilter {
     private Integer yearPublished;
     private String isbn;
     private Integer pages;
-    private Set<TagFilter> tags;
+    private List<TagFilter> tags;
 }

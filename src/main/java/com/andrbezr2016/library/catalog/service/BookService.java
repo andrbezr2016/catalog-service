@@ -101,11 +101,11 @@ public class BookService {
         return (record, cq, cb) -> cb.equal(record.get("pages"), pages);
     }
 
-    private static Specification<Book> byTags(Set<Tag> tags) {
+    private static Specification<Book> byTags(List<Tag> tags) {
         Collection<Specification<Book>> specs = new ArrayList<>();
         for (Tag tag : tags) {
             Specification<Book> spec = (record, cq, cb) -> {
-                cq.distinct(true);
+                Objects.requireNonNull(cq).distinct(true);
                 return cb.equal(record.get("tags").get("name"), tag.getName());
             };
             specs.add(spec);
@@ -120,7 +120,7 @@ public class BookService {
         }
 
         Book input = bookMapper.toEntity(bookInput);
-        Set<Tag> tags = mergeTags(input.getTags());
+        List<Tag> tags = mergeTags(input.getTags());
         input.setTags(tags);
         input = bookRepository.save(input);
         return bookMapper.toDto(input);
@@ -135,7 +135,7 @@ public class BookService {
         Book update = bookMapper.toEntity(bookUpdate);
         Book book = bookRepository.findById(id).orElse(null);
         if (book != null) {
-            Set<Tag> tags = mergeTags(update.getTags());
+            List<Tag> tags = mergeTags(update.getTags());
             update.setTags(tags);
             if (update.getTitle() != null) {
                 book.setTitle(update.getTitle());
@@ -179,12 +179,11 @@ public class BookService {
         }
     }
 
-    private Set<Tag> mergeTags(Set<Tag> tags) {
+    private List<Tag> mergeTags(List<Tag> tags) {
         if (tags != null) {
-            return tags.stream().flatMap(newTag -> {
-                Tag oldTag = tagRepository.findByName(newTag.getName()).orElse(null);
-                return Stream.of(Objects.requireNonNullElse(oldTag, newTag));
-            }).collect(Collectors.toSet());
+            List<String> names = tags.stream().map(Tag::getName).toList();
+            Map<String, Tag> tagMap = tagRepository.findAllByNameInUsingMap(names);
+            return tags.stream().flatMap(newTag -> Stream.of(tagMap.getOrDefault(newTag.getName(), newTag))).collect(Collectors.toList());
         } else {
             return null;
         }

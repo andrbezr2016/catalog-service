@@ -1,6 +1,6 @@
 mutation addBook {
     addBook(
-        bookInput: {title: "Test Title"}
+        bookInput: {title: "Test Title", tags: [{name: "Test Tag 1"}, {name: "Test Tag 2"}]}
     ) {
         author
         description

@@ -2,7 +2,7 @@ package com.andrbezr2016.library.catalog.dto;
 
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Setter
 @Getter
@@ -20,5 +20,5 @@ public class BookUpdate {
     private Integer yearPublished;
     private String isbn;
     private Integer pages;
-    private Set<TagUpdate> tags;
+    private List<TagUpdate> tags;
 }

@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,7 +60,7 @@ class BookServiceTest {
 
     @Test
     void getBooks_ByTags1() {
-        BookFilter bookFilter = BookFilter.builder().tags(Set.of(TagFilter.builder().name("Tag 3").build())).build();
+        BookFilter bookFilter = BookFilter.builder().tags(List.of(TagFilter.builder().name("Tag 3").build())).build();
 
         Collection<BookDto> bookDtoCollection = bookService.getBooks(bookFilter);
 
@@ -69,7 +70,7 @@ class BookServiceTest {
 
     @Test
     void getBooks_ByTags2() {
-        BookFilter bookFilter = BookFilter.builder().tags(Set.of(TagFilter.builder().name("Tag 5").build())).build();
+        BookFilter bookFilter = BookFilter.builder().tags(List.of(TagFilter.builder().name("Tag 5").build())).build();
 
         Collection<BookDto> bookDtoCollection = bookService.getBooks(bookFilter);
 
@@ -79,7 +80,7 @@ class BookServiceTest {
 
     @Test
     void getBooks_ByTags3() {
-        BookFilter bookFilter = BookFilter.builder().tags(Set.of(TagFilter.builder().name("Tag 5").build(), TagFilter.builder().name("Tag 3").build())).build();
+        BookFilter bookFilter = BookFilter.builder().tags(List.of(TagFilter.builder().name("Tag 5").build(), TagFilter.builder().name("Tag 3").build())).build();
 
         Collection<BookDto> bookDtoCollection = bookService.getBooks(bookFilter);
 
@@ -89,7 +90,7 @@ class BookServiceTest {
 
     @Test
     void getBooks_ByTags4() {
-        BookFilter bookFilter = BookFilter.builder().tags(Set.of(TagFilter.builder().name("Tag 10").build())).build();
+        BookFilter bookFilter = BookFilter.builder().tags(List.of(TagFilter.builder().name("Tag 10").build())).build();
 
         Collection<BookDto> bookDtoCollection = bookService.getBooks(bookFilter);
 
@@ -99,7 +100,7 @@ class BookServiceTest {
 
     @Test
     void getBooks_ByTags5() {
-        BookFilter bookFilter = BookFilter.builder().tags(Set.of(TagFilter.builder().name("Tag 10").build(), TagFilter.builder().name("Tag 3").build())).build();
+        BookFilter bookFilter = BookFilter.builder().tags(List.of(TagFilter.builder().name("Tag 10").build(), TagFilter.builder().name("Tag 3").build())).build();
 
         Collection<BookDto> bookDtoCollection = bookService.getBooks(bookFilter);
 
@@ -107,6 +108,15 @@ class BookServiceTest {
         assertEquals(2, bookDtoCollection.size());
     }
 
+    @Test
+    void getBooks_ByIsbnAndTags() {
+        BookFilter bookFilter = BookFilter.builder().isbn("5-55-xxxxxx-x").tags(List.of(TagFilter.builder().name("Tag 3").build())).build();
+
+        Collection<BookDto> bookDtoCollection = bookService.getBooks(bookFilter);
+
+        assertNotNull(bookDtoCollection);
+        assertEquals(1, bookDtoCollection.size());
+    }
 
     @Test
     void getBooks_ByAuthorAndDescription() {
@@ -131,13 +141,31 @@ class BookServiceTest {
     @Test
     void updateBook() {
         UUID id = UUID.fromString("66c25e62-7363-4fe7-8f05-91791db65789");
-        BookUpdate bookUpdate = BookUpdate.builder().title("B Book Updated").build();
+        BookUpdate bookUpdate = BookUpdate.builder().title("A Book Updated").build();
 
         BookDto bookDto = bookService.updateBook(id, bookUpdate);
 
         assertNotNull(bookDto);
         assertEquals(id, bookDto.getId());
         assertEquals(bookUpdate.getTitle(), bookDto.getTitle());
+    }
+
+    @Test
+    void updateBook_withTags() {
+        UUID id = UUID.fromString("66c25e62-7363-4fe7-8f05-91791db65789");
+        List<TagUpdate> tagUpdateList = List.of(
+                TagUpdate.builder().name("Tag 1").build(),
+                TagUpdate.builder().name("Tag 13").build(),
+                TagUpdate.builder().name("Tag 2").build()
+        );
+        BookUpdate bookUpdate = BookUpdate.builder().yearPublished(2003).tags(tagUpdateList).build();
+
+        BookDto bookDto = bookService.updateBook(id, bookUpdate);
+
+        assertNotNull(bookDto);
+        assertEquals(id, bookDto.getId());
+        assertEquals(bookUpdate.getYearPublished(), bookDto.getYearPublished());
+        assertEquals(bookUpdate.getTags().stream().map(TagUpdate::getName).collect(Collectors.toSet()), bookDto.getTags().stream().map(TagDto::getName).collect(Collectors.toSet()));
     }
 
     @Test
