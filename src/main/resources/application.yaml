@@ -20,3 +20,8 @@ spring:
     properties:
       hibernate:
         default_schema: ${spring.flyway.default-schema}
+  batch:
+    jdbc:
+      initialize-schema: "always"
+batch:
+  input: classpath:input/records.json

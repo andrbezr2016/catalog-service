@@ -29,6 +29,11 @@ class BookServiceTest {
     }
 
     @Test
+    void getBooks_Null() {
+        assertThrowsExactly(RuntimeException.class, () -> bookService.getBooks(null));
+    }
+
+    @Test
     void getBooks_ById() {
         BookFilter bookFilter = BookFilter.builder().id(UUID.fromString("5d643b16-ebad-4b1b-b586-2ee92b070d00")).build();
 
@@ -139,6 +144,11 @@ class BookServiceTest {
     }
 
     @Test
+    void addBook_WithNull() {
+        assertThrowsExactly(RuntimeException.class, () -> bookService.addBook(null));
+    }
+
+    @Test
     void updateBook() {
         UUID id = UUID.fromString("66c25e62-7363-4fe7-8f05-91791db65789");
         BookUpdate bookUpdate = BookUpdate.builder().title("A Book Updated").build();
@@ -151,7 +161,27 @@ class BookServiceTest {
     }
 
     @Test
-    void updateBook_withTags() {
+    void updateBook_WithNull() {
+        UUID id = UUID.fromString("66c25e62-7363-4fe7-8f05-91791db65789");
+
+        assertThrowsExactly(RuntimeException.class, () -> bookService.updateBook(id, null));
+    }
+
+    @Test
+    void updateBook_WithWrongId() {
+        UUID id = UUID.randomUUID();
+        List<TagUpdate> tagUpdateList = List.of(
+                TagUpdate.builder().name("Tag 1").build(),
+                TagUpdate.builder().name("Tag 13").build(),
+                TagUpdate.builder().name("Tag 2").build()
+        );
+        BookUpdate bookUpdate = BookUpdate.builder().yearPublished(2003).tags(tagUpdateList).build();
+
+        assertThrowsExactly(RuntimeException.class, () -> bookService.updateBook(id, bookUpdate));
+    }
+
+    @Test
+    void updateBook_WithTags() {
         UUID id = UUID.fromString("66c25e62-7363-4fe7-8f05-91791db65789");
         List<TagUpdate> tagUpdateList = List.of(
                 TagUpdate.builder().name("Tag 1").build(),
@@ -176,5 +206,12 @@ class BookServiceTest {
 
         assertNotNull(bookDto);
         assertEquals(id, bookDto.getId());
+    }
+
+    @Test
+    void deleteBook_WithWrongId() {
+        UUID id = UUID.randomUUID();
+
+        assertThrowsExactly(RuntimeException.class, () -> bookService.deleteBook(id));
     }
 }
