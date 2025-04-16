@@ -9,6 +9,7 @@ import org.springframework.graphql.test.tester.GraphQlTester;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,6 +23,38 @@ class BookControllerTest {
     private GraphQlTester tester;
     @MockitoBean
     private BookService bookService;
+
+    @Test
+    void getBooksByIds() {
+        Set<UUID> ids = Set.of(UUID.fromString("b9ee6225-1bc3-4524-bac5-69e4193658b5"), UUID.fromString("bf024cc8-b7aa-4ad9-9d3a-3ceeb11a6c04"));
+        List<BookDto> expectedBookDtoList = List.of(
+                BookDto.builder().id(UUID.fromString("b9ee6225-1bc3-4524-bac5-69e4193658b5")).title("Test Title 1").build(),
+                BookDto.builder().id(UUID.fromString("bf024cc8-b7aa-4ad9-9d3a-3ceeb11a6c04")).title("Test Title 2").build()
+        );
+        doReturn(expectedBookDtoList).when(bookService).getBooksByIds(eq(ids));
+
+        List<BookDto> bookDtoList = tester.documentName("getBooksByIds").execute().path("data.getBooksByIds").entityList(BookDto.class).get();
+
+        assertNotNull(bookDtoList);
+        assertFalse(bookDtoList.isEmpty());
+        assertEquals(2, expectedBookDtoList.size());
+    }
+
+    @Test
+    void getBooksExcludingIds() {
+        Set<UUID> ids = Set.of(UUID.fromString("b9ee6225-1bc3-4524-bac5-69e4193658b5"), UUID.fromString("bf024cc8-b7aa-4ad9-9d3a-3ceeb11a6c04"));
+        List<BookDto> expectedBookDtoList = List.of(
+                BookDto.builder().id(UUID.fromString("cca9e8ca-4791-49ce-bce8-222316a6e985")).title("Test Title 1").build(),
+                BookDto.builder().id(UUID.fromString("2ce57bfe-555d-4726-a87a-700e30d9cded")).title("Test Title 2").build()
+        );
+        doReturn(expectedBookDtoList).when(bookService).getBooksExcludingIds(eq(ids));
+
+        List<BookDto> bookDtoList = tester.documentName("getBooksExcludingIds").execute().path("data.getBooksExcludingIds").entityList(BookDto.class).get();
+
+        assertNotNull(bookDtoList);
+        assertFalse(bookDtoList.isEmpty());
+        assertEquals(2, expectedBookDtoList.size());
+    }
 
     @Test
     public void getBooks() {

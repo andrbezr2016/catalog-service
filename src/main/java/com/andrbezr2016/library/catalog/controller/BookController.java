@@ -23,6 +23,18 @@ public class BookController {
     private final BookService bookService;
 
     @QueryMapping
+    public Collection<BookDto> getBooksByIds(@Argument("ids") Collection<UUID> ids) {
+        log.info("Find books by ids: {}", ids);
+        return bookService.getBooksByIds(ids);
+    }
+
+    @QueryMapping
+    public Collection<BookDto> getBooksExcludingIds(@Argument("ids") Collection<UUID> ids) {
+        log.info("Find books excluding ids: {}", ids);
+        return bookService.getBooksExcludingIds(ids);
+    }
+
+    @QueryMapping
     public Collection<BookDto> getBooks(@Argument("bookFilter") BookFilter bookFilter) {
         log.info("Find books by filter: {}", bookFilter);
         return bookService.getBooks(bookFilter);

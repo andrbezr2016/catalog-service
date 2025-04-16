@@ -23,7 +23,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class BatchConfig {
 
     @Bean
-    public ItemReader<BookInput> reader(@Value("${batch.input}") Resource inputCsv) {
+    public ItemReader<BookInput> reader(@Value("${catalog-service.batch.input}") Resource inputCsv) {
         return new JsonItemReaderBuilder<BookInput>()
                 .name("bookItemReader")
                 .resource(inputCsv)

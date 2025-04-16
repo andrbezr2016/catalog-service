@@ -19,6 +19,26 @@ class BookServiceTest {
     private BookService bookService;
 
     @Test
+    void getBooksByIds() {
+        List<UUID> ids = List.of(UUID.fromString("5d643b16-ebad-4b1b-b586-2ee92b070d00"), UUID.fromString("66c25e62-7363-4fe7-8f05-91791db65789"));
+        Collection<BookDto> bookDtoCollection = bookService.getBooksByIds(ids);
+
+        assertNotNull(bookDtoCollection);
+        assertEquals(2, bookDtoCollection.size());
+    }
+
+    @Test
+    void getBooksExcludingIds() {
+        List<UUID> ids = List.of(UUID.fromString("5d643b16-ebad-4b1b-b586-2ee92b070d00"), UUID.fromString("66c25e62-7363-4fe7-8f05-91791db65789"));
+        Collection<BookDto> bookDtoCollection = bookService.getBooksExcludingIds(ids);
+
+        assertNotNull(bookDtoCollection);
+        assertTrue(bookDtoCollection.size() >= 4);
+        assertFalse(bookDtoCollection.stream().map(BookDto::getId).toList().contains(ids.getFirst()));
+        assertFalse(bookDtoCollection.stream().map(BookDto::getId).toList().contains(ids.getLast()));
+    }
+
+    @Test
     void getBooks_All() {
         BookFilter bookFilter = BookFilter.builder().build();
 
@@ -131,6 +151,16 @@ class BookServiceTest {
 
         assertNotNull(bookDtoCollection);
         assertEquals(1, bookDtoCollection.size());
+    }
+
+    @Test
+    void getBooks_BatchJob() {
+        BookFilter bookFilter = BookFilter.builder().isbn("xxx-xxx-xxx").build();
+
+        Collection<BookDto> bookDtoCollection = bookService.getBooks(bookFilter);
+
+        assertNotNull(bookDtoCollection);
+        assertEquals(3, bookDtoCollection.size());
     }
 
     @Test

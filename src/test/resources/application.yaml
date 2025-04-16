@@ -4,8 +4,9 @@ spring:
   batch:
     jdbc:
       initialize-schema: "always"
-batch:
-  input: classpath:input/records.json
+catalog-service:
+  batch:
+    input: classpath:input/records.json
 logging:
   level:
     org.hibernate.orm.jdbc.bind: TRACE

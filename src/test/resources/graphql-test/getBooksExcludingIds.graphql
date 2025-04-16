@@ -1,0 +1,8 @@
+query getBooksExcludingIds {
+    getBooksExcludingIds(
+        ids: ["b9ee6225-1bc3-4524-bac5-69e4193658b5", "bf024cc8-b7aa-4ad9-9d3a-3ceeb11a6c04"]
+    ) {
+        title
+        id
+    }
+}

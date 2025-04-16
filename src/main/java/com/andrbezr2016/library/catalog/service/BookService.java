@@ -27,6 +27,16 @@ public class BookService {
     private final BookMapper bookMapper;
 
     @Transactional
+    public Collection<BookDto> getBooksByIds(Collection<UUID> ids) {
+        return bookMapper.toDtoCollection(bookRepository.findAllById(ids));
+    }
+
+    @Transactional
+    public Collection<BookDto> getBooksExcludingIds(Collection<UUID> ids) {
+        return bookMapper.toDtoCollection(bookRepository.findAllExcludingIds(ids));
+    }
+
+    @Transactional
     public Collection<BookDto> getBooks(BookFilter bookFilter) {
         if (bookFilter == null) {
             throw new RuntimeException("BookFilter is null!");

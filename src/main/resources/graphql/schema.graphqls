@@ -62,6 +62,8 @@ input TagFilter {
 }
 
 type Query {
+    getBooksByIds(ids: [ID!]): [BookDto]
+    getBooksExcludingIds(ids: [ID!]): [BookDto]
     getBooks(bookFilter: BookFilter!): [BookDto]
 }
 
