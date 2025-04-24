@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,8 +33,7 @@ public class Book {
     private String isbn;
     @Column(name = "pages")
     private Integer pages;
-    @ManyToMany
-    @Cascade({CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_tags",
             joinColumns = @JoinColumn(name = "book_id"),

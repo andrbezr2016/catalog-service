@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "title": "Book 1",
+    "description": "Book 1 description",
+    "author": "Andrey B",
+    "publisher": "Andrey B",
+    "yearPublished": 2023,
+    "isbn": "xxx-xxx-xxx",
+    "pages": 10,
+    "tags": [
+      "book1",
+      "new",
+      "test"
+    ]
+  },
+  {
+    "title": "Book 2",
+    "description": "Book 2 description",
+    "author": "Andrey B",
+    "publisher": "Andrey B",
+    "yearPublished": 2024,
+    "isbn": "xxx-xxx-xxx",
+    "pages": 50,
+    "tags": [
+      "book2",
+      "new",
+      "test"
+    ]
+  },
+  {
+    "title": "Book 3",
+    "description": "Book 3 description",
+    "author": "Andrey B",
+    "publisher": "Andrey B",
+    "yearPublished": 2025,
+    "isbn": "xxx-xxx-xxx",
+    "pages": 100,
+    "tags": [
+      "book3",
+      "new",
+      "test"
+    ]
+  }
+]
